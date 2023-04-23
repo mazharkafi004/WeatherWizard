@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Weather Wizard</title>
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="main.js"></script>
+  </head>
+  <body name="body">
+    <h1 class="colorise"><i class="fa fa-sun-o" aria-hidden="true"></i>Weather W<i class="fa fa-bolt" aria-hidden="true"></i>zard<i class="fa fa-cloud" aria-hidden="true"></i></h1>
+    <div id="searchBox">
+      <input type="text" id="cityInput" placeholder="Enter city name" oninput="buttonClickable()" />
+      <label for="countrySelect">Country:</label>
+      <select id="countrySelect"></select>
+      <button id="btn" disabled onclick="getWeather()">Get Weather <i class="fa fa-search"></i></button>
+      <div class="tooltip"><i class="fa fa-info-circle fa-2x colorise"  aria-hidden="true"></i>
+        <span class="tooltiptext">Enter both city and country for better result</span>
+      </div>
+    </div>
+    <div id="weatherData"></div>
+  </body>
+</html>
