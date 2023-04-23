@@ -7,8 +7,8 @@ body {
    /* #9bc4e2; */
   color: #222222;
 }
-#body {
-  width: 50%;
+.body1 {
+  margin-top:5%;
 }
 
 .card {
