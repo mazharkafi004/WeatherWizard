@@ -77,7 +77,7 @@ function degreesToDirection(degrees) {
 }
 
 function getWeather() {
-  var cityName = document.getElementById("cityInput").value;
+  var cityName = document.getElementById("cityInput").value.trim();
   var countryName = document.getElementById("countrySelect").value;
   var apiKey = "8534e453e695aaa750bc5470cc2fced9";
   var apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${cityName},${countryName}&appid=${apiKey}&units=metric`;
