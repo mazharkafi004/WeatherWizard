@@ -7,6 +7,10 @@
     <script src="main.js"></script>
   </head>
   <body class="body1">
+    <label class="switch">
+      <input  type="checkbox" id="myCheckbox"  onchange="modeChange()" >
+      <span id="darkMode" class="slider round"></span>
+    </label>
     <h1 class="colorise"><i class="fa fa-sun-o" aria-hidden="true"></i>Weather W<i class="fa fa-bolt" aria-hidden="true"></i>zard<i class="fa fa-cloud" aria-hidden="true"></i></h1>
     <div id="searchBox">
       <input type="text" id="cityInput" placeholder="Enter city name" oninput="buttonClickable()" />

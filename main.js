@@ -17,8 +17,31 @@ function getCountries() {
     })
     .catch((error) => console.error(error)); // log any errors to the console
 }
+
+function modeChange() {
+  const myCheckbox = document.getElementById("myCheckbox");
+  const card1 = document.getElementById("crd");
+  const card2 = document.getElementById("crd1");
+  var slider = document.querySelector('.slider');
+  if (myCheckbox.checked) {
+    document.body.style.backgroundColor = "#131313";
+    document.body.style.color = "white";
+    card1.style.backgroundColor = "#1F1F1F";
+    card2.style.backgroundColor = "#1F1F1F";
+    slider.style.backgroundColor = 'grey';
+  } else {
+    document.body.style.backgroundColor = "#EBEBEB";
+    document.body.style.color = "#222222";
+    card1.style.backgroundColor = "#FFFFFF";
+    card2.style.backgroundColor = "#FFFFFF";
+    slider.style.backgroundColor = 'skyblue';
+  }
+}
+
 function show() {
   document.getElementById("cityInput").value = "";
+  var btn = document.getElementById("btn");
+  btn.disabled = true;
   document.getElementById("countrySelect").value = "";
   var weatherInfo = document.getElementById("weatherData");
   var searchBox = document.getElementById("searchBox");
@@ -71,7 +94,7 @@ function getWeather() {
         const timeOptions = { hour12: true, hourCycle: "h12" };
 
         weatherDataElement.innerHTML = `
-        <div class="card">
+        <div id="crd" class="card">
         <p>Current Weather of: <b>${name}, ${country}</b> </p> <br>
         <img src="http://openweathermap.org/img/wn/${icon}.png" alt="${description}" style="width: 10%">
         <br>
@@ -83,7 +106,7 @@ function getWeather() {
         )} local time</p> <br>
         </div>
       </div>
-        <div class="card">
+        <div id="crd1" class="card">
         <div class="container">
         
         <hr class="solid">
@@ -121,7 +144,5 @@ function getWeather() {
 
 window.onload = function () {
   getCountries();
-  // document.getElementById('countrySelect').addEventListener('change', function() {
-  //   getWeather();
-  // });
+
 };
