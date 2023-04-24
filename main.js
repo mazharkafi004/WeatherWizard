@@ -20,21 +20,25 @@ function getCountries() {
 
 function modeChange() {
   const myCheckbox = document.getElementById("myCheckbox");
-  const card1 = document.getElementById("crd");
-  const card2 = document.getElementById("crd1");
-  var slider = document.querySelector('.slider');
+  const card1 = document.getElementById("card1");
+  const card2 = document.getElementById("card2");
+  var slider = document.querySelector(".slider");
   if (myCheckbox.checked) {
+    slider.style.backgroundColor = "grey";
     document.body.style.backgroundColor = "#131313";
     document.body.style.color = "white";
     card1.style.backgroundColor = "#1F1F1F";
+    card1.style.border = "1px solid #2C2C2C";
+    card2.style.border = "1px solid #2C2C2C";
     card2.style.backgroundColor = "#1F1F1F";
-    slider.style.backgroundColor = 'grey';
   } else {
+    slider.style.backgroundColor = "skyblue";
     document.body.style.backgroundColor = "#EBEBEB";
     document.body.style.color = "#222222";
     card1.style.backgroundColor = "#FFFFFF";
+    card1.style.border = "1px solid #ccc";
+    card2.style.border = "1px solid #ccc";
     card2.style.backgroundColor = "#FFFFFF";
-    slider.style.backgroundColor = 'skyblue';
   }
 }
 
@@ -72,6 +76,8 @@ function getWeather() {
         searchBox.style.display = "none";
         var weatherInfo = document.getElementById("weatherData");
         weatherInfo.style.display = "block";
+
+      
         const { name, sys, main, weather, wind, clouds, dt, timezone } = data;
         const { country, sunrise, sunset } = sys;
         const { temp, feels_like, temp_min, temp_max, pressure, humidity } =
@@ -94,19 +100,20 @@ function getWeather() {
         const timeOptions = { hour12: true, hourCycle: "h12" };
 
         weatherDataElement.innerHTML = `
-        <div id="crd" class="card">
+        <div id="card1" class="card">
         <p>Current Weather of: <b>${name}, ${country}</b> </p> <br>
         <img src="http://openweathermap.org/img/wn/${icon}.png" alt="${description}" style="width: 10%">
         <br>
         <div class="container">
         <p>${description}</p>
-        <p>last updated at: ${localTime.toLocaleTimeString(
+        <span class="muted-text"><small>last updated at: ${localTime.toLocaleTimeString(
           [],
           timeOptions
-        )} local time</p> <br>
+        )} local time</small></span>
+<br>
         </div>
       </div>
-        <div id="crd1" class="card">
+        <div id="card2" class="card">
         <div class="container">
         
         <hr class="solid">
@@ -125,7 +132,23 @@ function getWeather() {
         <button class="button" onclick="show()">See another</button>
       </div>
   
-      `;
+      `
+      var checkbox = document.getElementById("myCheckbox");
+
+      var card1 = document.getElementById("card1");
+      var card2 = document.getElementById("card2");
+    
+      if (checkbox.checked) {
+        card1.style.backgroundColor = "#1F1F1F";
+        card1.style.border = "1px solid #2C2C2C";
+        card2.style.border = "1px solid #2C2C2C";
+        card2.style.backgroundColor = "#1F1F1F";
+      } else {
+        card1.style.backgroundColor = "#FFFFFF";
+        card1.style.border = "1px solid #ccc";
+        card2.style.border = "1px solid #ccc";
+        card2.style.backgroundColor = "#FFFFFF";
+      }
       } else {
         var weatherDataElement = document.getElementById("weatherData");
         weatherDataElement.innerHTML = `
@@ -144,5 +167,4 @@ function getWeather() {
 
 window.onload = function () {
   getCountries();
-
 };
