@@ -61,6 +61,21 @@ function buttonClickable() {
     button.disabled = false;
   }
 }
+function degreesToDirection(degrees) {
+  const directions = [
+    "North",
+    "North East",
+    "East",
+    "South East",
+    "South",
+    "South West",
+    "West",
+    "North West",
+  ];
+  const index = Math.round(degrees / 45) % 8;
+  return directions[index];
+}
+
 function getWeather() {
   var cityName = document.getElementById("cityInput").value;
   var countryName = document.getElementById("countrySelect").value;
@@ -77,8 +92,17 @@ function getWeather() {
         var weatherInfo = document.getElementById("weatherData");
         weatherInfo.style.display = "block";
 
-      
-        const { name, sys, main, weather, wind, clouds, dt, timezone } = data;
+        const {
+          name,
+          sys,
+          main,
+          weather,
+          wind,
+          clouds,
+          dt,
+          timezone,
+          visibility,
+        } = data;
         const { country, sunrise, sunset } = sys;
         const { temp, feels_like, temp_min, temp_max, pressure, humidity } =
           main;
@@ -90,7 +114,8 @@ function getWeather() {
         // display the weather data in the HTML page_code
         var weatherDataElement = document.getElementById("weatherData");
         const utcTime = new Date(dt * 1000 + timezone * 1000);
-
+        const visible = visibility / 1000;
+        const windDirection = degreesToDirection(deg);
         // Convert UTC time to local time
         const localTime = new Date(
           utcTime.getTime() + new Date().getTimezoneOffset() * 60 * 1000
@@ -101,15 +126,22 @@ function getWeather() {
 
         weatherDataElement.innerHTML = `
         <div id="card1" class="card">
-        <p>Current Weather of: <b>${name}, ${country}</b> </p> <br>
-        <img src="http://openweathermap.org/img/wn/${icon}.png" alt="${description}" style="width: 10%">
+        <div class="card-header">
+  <div>
+    <p>Current Weather of:<i class="fa fa-map-marker" aria-hidden="true"></i> <b>${name}, ${country} </b></p>
+  </div>
+  <div class="time">
+    <span class="muted-text"><small><i class="fa fa-clock-o" aria-hidden="true"></i> Last updated at: ${localTime.toLocaleTimeString(
+      [],
+      timeOptions
+    )} local time</small></span>
+  </div>
+</div>
+        <hr>
+        <img src="http://openweathermap.org/img/wn/${icon}.png" alt="${description}" style="width: 10%"> 
         <br>
         <div class="container">
-        <p>${description}</p>
-        <span class="muted-text"><small>last updated at: ${localTime.toLocaleTimeString(
-          [],
-          timeOptions
-        )} local time</small></span>
+        <p>${description} </p>
 <br>
         </div>
       </div>
@@ -117,38 +149,51 @@ function getWeather() {
         <div class="container">
         
         <hr class="solid">
-        <p>Temperature: ${temp}°C</p>
-        <p>Feels like: ${feels_like}°C</p>
-        <p>Pressure: ${pressure} hPa</p>
-        <p>Humidity: ${humidity}%</p>
-        <p>Wind speed: ${speed} m/s</p>
-        <p>Wind direction: ${deg}°</p>
-        <p>Cloudiness: ${all}%</p>
-        <p>Sunrise: ${new Date(sunrise * 1000).toLocaleTimeString()}</p>
-        <p>Sunset: ${new Date(sunset * 1000).toLocaleTimeString()}</p>
+        <div class="row">
+  <div class="column">
+  <p><i class="fa fa-thermometer-empty" aria-hidden="true"></i> Temperature: ${temp}°C</p>
+  <p><i class="fa fa-registered" aria-hidden="true"></i> Real feel: ${feels_like}°C</p>
+  <p><i class="fa fa-compress" aria-hidden="true"></i> Pressure: ${pressure} mb</p>
+  <p><i class="fa fa-tint" aria-hidden="true"></i> Humidity: ${humidity}%</p>
+  <p><i class="fa fa-eye" aria-hidden="true"></i> Visibility: ${visible}km</p>
+  </div>
+  <div class="column">
+  <p><i class="fa fa-superpowers" aria-hidden="true"></i> Wind speed: ${speed} m/s</p>
+  <p><i class="fa fa-arrows" aria-hidden="true"></i> Wind direction: ${deg}° ${windDirection}</p>
+  <p><i class="fa fa-cloud" aria-hidden="true"></i> Cloudiness: ${all}%</p>
+  <p><span class="material-symbols-outlined" style="font-size: 18px">
+  water_lux
+  </span> Sunrise:
+  </span></i> ${new Date(sunrise * 1000).toLocaleTimeString()}</p>
+  <p><span class="material-symbols-outlined" style="font-size: 18px">
+  wb_twilight
+  </span> Sunset: ${new Date(sunset * 1000).toLocaleTimeString()}</p></div>
+</div>
+
+  
         </div>
         <br>
         <hr>
         <button class="button" onclick="show()">See another</button>
       </div>
   
-      `
-      var checkbox = document.getElementById("myCheckbox");
+      `;
+        var checkbox = document.getElementById("myCheckbox");
 
-      var card1 = document.getElementById("card1");
-      var card2 = document.getElementById("card2");
-    
-      if (checkbox.checked) {
-        card1.style.backgroundColor = "#1F1F1F";
-        card1.style.border = "1px solid #2C2C2C";
-        card2.style.border = "1px solid #2C2C2C";
-        card2.style.backgroundColor = "#1F1F1F";
-      } else {
-        card1.style.backgroundColor = "#FFFFFF";
-        card1.style.border = "1px solid #ccc";
-        card2.style.border = "1px solid #ccc";
-        card2.style.backgroundColor = "#FFFFFF";
-      }
+        var card1 = document.getElementById("card1");
+        var card2 = document.getElementById("card2");
+
+        if (checkbox.checked) {
+          card1.style.backgroundColor = "#1F1F1F";
+          card1.style.border = "1px solid #2C2C2C";
+          card2.style.border = "1px solid #2C2C2C";
+          card2.style.backgroundColor = "#1F1F1F";
+        } else {
+          card1.style.backgroundColor = "#FFFFFF";
+          card1.style.border = "1px solid #ccc";
+          card2.style.border = "1px solid #ccc";
+          card2.style.backgroundColor = "#FFFFFF";
+        }
       } else {
         var weatherDataElement = document.getElementById("weatherData");
         weatherDataElement.innerHTML = `
