@@ -1,4 +1,5 @@
 function getCountries() {
+  
   var apiUrl = "https://restcountries.com/v3.1/all";
 
   // make a GET request to the API URL using the fetch() method
@@ -14,6 +15,7 @@ function getCountries() {
         optionElement.text = country.name.common;
         countrySelectElement.appendChild(optionElement);
       });
+
     })
     .catch((error) => console.error(error)); // log any errors to the console
 }
@@ -43,15 +45,34 @@ function modeChange() {
 }
 
 function show() {
-  document.getElementById("cityInput").value = "";
-  var btn = document.getElementById("btn");
-  btn.disabled = true;
-  document.getElementById("countrySelect").value = "";
-  var weatherInfo = document.getElementById("weatherData");
+  var loader = document.getElementById("loader");
   var searchBox = document.getElementById("searchBox");
-  searchBox.style.display = "block";
-  weatherInfo.style.display = "none";
+  var cityInput = document.getElementById("cityInput");
+  var btn = document.getElementById("btn");
+  var countrySelect = document.getElementById("countrySelect");
+  var weatherInfo = document.getElementById("weatherData");
+  
+
+  // Add the "loader" class to show the loader
+  loader.classList.add("loader");
+
+  // Reset the input and select elements
+  cityInput.value = "";
+  btn.disabled = true;
+  countrySelect.value = "AF";
+  countrySelect.name = "Afganishtan";
+
+  // Hide the weather data and show the search box
+  weatherInfo.innerHTML = "";
+  
+
+  // Remove the "loader" class to hide the loader
+  setTimeout(() => {
+    loader.classList.remove("loader");
+    searchBox.style.display = "block";
+  }, 500);
 }
+
 function buttonClickable() {
   var cityName = document.getElementById("cityInput").value;
   var button = document.getElementById("btn");
@@ -77,6 +98,9 @@ function degreesToDirection(degrees) {
 }
 
 function getWeather() {
+  document.getElementById("loader").classList.add("loader");
+  let weatherDataElement = document.getElementById("weatherData");
+  weatherDataElement.innerHTML = ` `;
   var cityName = document.getElementById("cityInput").value.trim();
   var countryName = document.getElementById("countrySelect").value;
   var apiKey = "8534e453e695aaa750bc5470cc2fced9";
@@ -87,6 +111,7 @@ function getWeather() {
     .then((response) => response.json()) // parse the JSON data returned by the API
     .then((data) => {
       if (data["cod"] == 200) {
+        document.getElementById("loader").classList.remove("loader");
         var searchBox = document.getElementById("searchBox");
         searchBox.style.display = "none";
         var weatherInfo = document.getElementById("weatherData");
@@ -104,8 +129,7 @@ function getWeather() {
           visibility,
         } = data;
         const { country, sunrise, sunset } = sys;
-        const { temp, feels_like, temp_min, temp_max, pressure, humidity } =
-          main;
+        const { temp, feels_like, pressure, humidity } = main;
         const { description, icon } = weather[0];
         const { speed, deg } = wind;
         const { all } = clouds;
@@ -195,9 +219,10 @@ function getWeather() {
           card2.style.backgroundColor = "#FFFFFF";
         }
       } else {
-        var weatherDataElement = document.getElementById("weatherData");
+        document.getElementById("loader").classList.remove("loader");
+        let weatherDataElement = document.getElementById("weatherData");
         weatherDataElement.innerHTML = `
-      <p>City and Country combinations isn't correct</p>
+        <span style="color:red"><h1>City not found <i class="fa fa-times" aria-hidden="true"></h1></i></span>
     `;
       }
     })
@@ -205,11 +230,19 @@ function getWeather() {
       // display the error message in the HTML page
       var weatherDataElement = document.getElementById("weatherData");
       weatherDataElement.innerHTML = `
-      <p>${error}</p>
+      <span>${error}</span>
     `;
     });
 }
 
 window.onload = function () {
   getCountries();
+  var loader = document.getElementById("loader");
+  var searchBox = document.getElementById("searchBox");
+  searchBox.style.display = "none";
+  loader.classList.add("loader");
+  setTimeout(() => {
+    loader.classList.remove("loader");
+    searchBox.style.display = "block";
+  }, 500);
 };
