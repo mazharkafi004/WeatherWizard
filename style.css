@@ -1,10 +1,10 @@
 body {
-    font-family: "Lucida Console", "Courier New", monospace;
+  font-family: "Lucida Console", "Courier New", monospace;
   /* display: flex; */
   text-align: center;
   justify-content: center;
-  background-color: #EBEBEB;
-   /* #9bc4e2; */
+  background-color: #ebebeb;
+  /* #9bc4e2; */
   color: #222222;
 }
 #loader-container {
@@ -14,10 +14,10 @@ body {
   margin-top: 20px;
 }
 .body1 {
-  margin-top:5%;
+  margin-top: 5%;
 }
-.dark{
-margin-left: -20%;
+.dark {
+  margin-left: -20%;
 }
 .loader {
   border: 16px solid #f3f3f3;
@@ -31,143 +31,225 @@ margin-left: -20%;
 
 /* Safari */
 @-webkit-keyframes spin {
-  0% { -webkit-transform: rotate(0deg); }
-  100% { -webkit-transform: rotate(360deg); }
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 .card {
-    text-align: center;
-    /* display: flex; */
-    justify-content: center;
-    margin-left: 20%;
-    margin-right: 20%;
-    background-color: white;
-    border: 1px solid #ccc;
-    padding: 10px;
-    margin-bottom: 10px;
-    box-shadow: 0 8px 16px 0 #707070;
-    transition: 0.3s;
+  text-align: center;
+  /* display: flex; */
+  justify-content: center;
+  margin-left: 20%;
+  margin-right: 20%;
+  background-color: white;
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 10px;
+  box-shadow: 0 8px 16px 0 #707070;
+  transition: 0.3s;
+}
+@media screen and (max-width: 768px) {
+  .card {
+    margin-left: 5%;
+    margin-right: 5%;
   }
-  
-  .card:first-of-type {
-    margin-top: 0;
+}
+
+@media screen and (max-width: 480px) {
+  .card {
+    margin-left: 2%;
+    margin-right: 2%;
+    padding: 5px;
   }
-  
+}
+.card:first-of-type {
+  margin-top: 0;
+}
+
+.container {
+  margin-left: 10px;
+}
+@media screen and (max-width: 768px) {
   .container {
-    margin-left: 10px;
+    margin-left: 5%;
   }
-  
-  hr.solid {
-    border-top: 1px solid #ccc;
+}
+
+@media screen and (max-width: 480px) {
+  .container {
+    margin-left: 2%;
+  }
+}
+hr.solid {
+  border-top: 1px solid #ccc;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+#searchBox {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+@media screen and (max-width: 768px) {
+  #searchBox {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  #searchBox {
     margin-top: 5px;
     margin-bottom: 5px;
   }
-  #searchBox {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 20px;
-    margin-bottom: 20px;
-  }
-  .column {
-    float: left;
-    width: 50%;
-  }
-
-  
-  /* On mouse-over, add a deeper shadow */
-  .card:hover {
-    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-  }
-  /* Clear floats after the columns */
-  .row:after {
-    content: "";
-    display: table;
-    clear: both;
-  }
-
-  .card-header {
-    display: flex;
-    justify-content: space-between;
-  }
-  
-  .time {
-    text-align: right;
-  }
-  #cityInput {
-    font-size: 16px;
-    padding: 8px;
-    border: none;
-    border-bottom: 2px solid gray;
-    margin-right: 10px;
-  }
-  
-  #countrySelect {
-    font-size: 16px;
-    padding: 8px;
-    border: none;
-    border-bottom: 2px solid gray;
-    margin-right: 10px;
-  }
-  .muted-text {
-    color: #999999; /* muted color */
-    /* font-size: 0.8em; smaller font size */
-  }
-  button {
-    font-size: 16px;
-    padding: 10px 20px;
-    background-color: orange;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  button:disabled {
-    background-color: #ccc;
-    color: #666;
-    cursor: default;
-  }
-
-.colorise{
-    color: orange;
 }
+.column {
+  float: left;
+  width: 50%;
+}
+
+/* On mouse-over, add a deeper shadow */
+.card:hover {
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+}
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.time {
+  text-align: right;
+}
+#cityInput {
+  font-size: 16px;
+  padding: 8px;
+  border: none;
+  border-bottom: 2px solid gray;
+  margin-right: 10px;
+}
+
+#countrySelect {
+  font-size: 16px;
+  padding: 8px;
+  border: none;
+  border-bottom: 2px solid gray;
+  margin-right: 10px;
+}
+@media screen and (max-width: 768px) {
+  #cityInput {
+    font-size: 14px;
+    padding: 6px;
+    margin-right: 5px;
+  }
+
+  #countrySelect {
+    font-size: 14px;
+    padding: 6px;
+    margin-right: 5px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  #cityInput {
+    font-size: 12px;
+    padding: 4px;
+    margin-right: 3px;
+  }
+
+  #countrySelect {
+    font-size: 12px;
+    padding: 4px;
+    margin-right: 3px;
+  }
+}
+.muted-text {
+  color: #999999; /* muted color */
+  /* font-size: 0.8em; smaller font size */
+}
+button {
+  font-size: 16px;
+  padding: 10px 20px;
+  background-color: orange;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:disabled {
+  background-color: #ccc;
+  color: #666;
+  cursor: default;
+}
+
+.colorise {
+  color: orange;
+}
+.tooltip {
+  position: relative;
+  margin-left: 5%;
+  display: inline-block;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 120px;
+  background-color: orange;
+  color: #fff;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+
+  /* Position the tooltip text to the right of the container */
+  position: absolute;
+  left: 110%;
+  top: 50%;
+  transform: translateY(-50%);
+
+  /* Show the tooltip text when you mouse over the tooltip container */
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+  z-index: 1;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+@media only screen and (max-width: 768px) {
   .tooltip {
-    position: relative;
-    margin-left: 5%;
-    display: inline-block;
+    margin-left: 2%;
   }
-  
+
   .tooltip .tooltiptext {
-    visibility: hidden;
-    width: 120px;
-    background-color: orange;
-    color: #fff;
-    text-align: center;
-    padding: 5px 0;
-    border-radius: 6px;
-    
-    /* Position the tooltip text to the right of the container */
-    position: absolute;
-    left: 110%;
-    top: 50%;
-    transform: translateY(-50%);
-    
-    /* Show the tooltip text when you mouse over the tooltip container */
-    opacity: 0;
-    transition: opacity 0.3s ease-in-out;
-    z-index: 1;
+    width: 80px;
+    left: 100%;
+    top: 0;
+    transform: translateX(5px);
   }
-  
-  .tooltip:hover .tooltiptext {
-    visibility: visible;
-    opacity: 1;
-  }
-  /* Style for the switch container */
+}
+/* Style for the switch container */
 .switch {
   position: relative;
   display: inline-block;
@@ -191,7 +273,7 @@ margin-left: -20%;
   right: 0;
   bottom: 0;
   background-color: skyblue;
-  transition: background-color .4s, color .4s;
+  transition: background-color 0.4s, color 0.4s;
 }
 
 /* Style for the slider thumb */
@@ -205,7 +287,7 @@ margin-left: -20%;
   margin-top: 12%;
   bottom: 4px;
   /* background-color: white; */
-  transition: transform .4s, color .4s;
+  transition: transform 0.4s, color 0.4s;
   font-family: "FontAwesome";
   color: orange;
   background-color: white;
@@ -233,4 +315,54 @@ input:checked + .slider:before {
 /* Rounded style for the slider thumb */
 .slider.round:before {
   border-radius: 50%;
+}
+/* Media query for screens smaller than 600px */
+@media (max-width: 600px) {
+  .switch {
+    width: 50px;
+    height: 28px;
+  }
+  
+  .slider:before {
+    height: 22px;
+    width: 22px;
+    font-size: 16px;
+    left: 2px;
+    margin-top: 10%;
+    bottom: 2px;
+  }
+}
+
+/* Media query for screens between 600px and 900px */
+@media (min-width: 600px) and (max-width: 900px) {
+  .switch {
+    width: 55px;
+    height: 30px;
+  }
+  
+  .slider:before {
+    height: 24px;
+    width: 24px;
+    font-size: 18px;
+    left: 3px;
+    margin-top: 11%;
+    bottom: 3px;
+  }
+}
+
+/* Media query for screens larger than 900px */
+@media (min-width: 900px) {
+  .switch {
+    width: 60px;
+    height: 34px;
+  }
+  
+  .slider:before {
+    height: 26px;
+    width: 26px;
+    font-size: 20px;
+    left: 4px;
+    margin-top: 12%;
+    bottom: 4px;
+  }
 }
