@@ -20,11 +20,24 @@ function getCountries() {
 
 function modeChange() {
   const myCheckbox = document.getElementById("myCheckbox");
+  if (myCheckbox.checked) {
+    localStorage.setItem("darkmode", "true");
+    toggleDarkMode();
+  } else {
+    localStorage.setItem("darkmode", "false");
+    toggleDarkMode();
+  }
+}
+function toggleDarkMode() {
+  const isDarkModeEnabled = localStorage.getItem("darkmode") === "true";
+  const myCheckbox = document.getElementById("myCheckbox");
   const card1 = document.getElementById("card1");
   const card2 = document.getElementById("card2");
-  let slider = document.querySelector(".slider");
-  let mutedText = document.querySelector(".muted-text");
-  if (myCheckbox.checked) {
+  const slider = document.querySelector(".slider");
+  const mutedText = document.querySelector(".muted-text");
+
+  if (isDarkModeEnabled) {
+    myCheckbox.checked = true;
     slider.style.backgroundColor = "grey";
     document.body.style.backgroundColor = "#131313";
     document.body.style.color = "white";
@@ -36,6 +49,7 @@ function modeChange() {
     card2.style.boxShadow = "0 8px 16px 0 rgba(255, 255, 255, 0.2)";
     mutedText.style.color = "white";
   } else {
+    myCheckbox.checked = false;
     slider.style.backgroundColor = "skyblue";
     document.body.style.backgroundColor = "#EBEBEB";
     document.body.style.color = "#222222";
@@ -47,8 +61,9 @@ function modeChange() {
     card2.style.boxShadow = "0 8px 16px 0 #C0C0C0";
     mutedText.style.color = "grey";
   }
-}
 
+  // localStorage.setItem("darkmode", !isDarkModeEnabled);
+}
 function show() {
   let loader = document.getElementById("loader");
   let searchBox = document.getElementById("searchBox");
@@ -161,7 +176,7 @@ function getWeather() {
         <span class="muted-text"><small><i class="fa fa-clock-o" aria-hidden="true"></i> Last updated at: ${localTime.toLocaleTimeString(
           [],
           timeOptions
-          )}<br>local time</small></span>
+        )}<br>local time</small></span>
           </div>
           </div>
           <hr>
@@ -194,7 +209,9 @@ function getWeather() {
           </span></i> ${new Date(sunrise * 1000).toLocaleTimeString()}</p>
           <p><span class="material-symbols-outlined" style="font-size: 18px">
           wb_twilight
-          </span> Sunset: ${new Date(sunset * 1000).toLocaleTimeString()}</p></div>
+          </span> Sunset: ${new Date(
+            sunset * 1000
+          ).toLocaleTimeString()}</p></div>
         </div>
 
   
@@ -205,28 +222,7 @@ function getWeather() {
         </div>
   
       `;
-        let checkbox = document.getElementById("myCheckbox");
-        let mutedText = document.querySelector(".muted-text");
-        let card1 = document.getElementById("card1");
-        let card2 = document.getElementById("card2");
-
-        if (checkbox.checked) {
-          card1.style.backgroundColor = "#1F1F1F";
-          card1.style.border = "1px solid #2C2C2C";
-          card2.style.border = "1px solid #2C2C2C";
-          card2.style.backgroundColor = "#1F1F1F";
-          card1.style.boxShadow = "0 8px 16px 0 rgba(255, 255, 255, 0.2)";
-          card2.style.boxShadow = "0 8px 16px 0 rgba(255, 255, 255, 0.2)";
-          mutedText.style.color = "white";
-        } else {
-          card1.style.backgroundColor = "#FFFFFF";
-          card1.style.border = "1px solid #ccc";
-          card2.style.border = "1px solid #ccc";
-          card2.style.backgroundColor = "#FFFFFF";
-          card1.style.boxShadow = "0 8px 16px 0 #C0C0C0";
-          card2.style.boxShadow = "0 8px 16px 0 #C0C0C0";
-          mutedText.style.color = "grey";
-        }
+        toggleDarkMode();
       } else {
         document.getElementById("loader").classList.remove("loader");
         let weatherDataElement = document.getElementById("weatherData");
@@ -250,8 +246,10 @@ window.onload = function () {
   let searchBox = document.getElementById("searchBox");
   searchBox.style.display = "none";
   loader.classList.add("loader");
+
   setTimeout(() => {
     loader.classList.remove("loader");
     searchBox.style.display = "block";
   }, 500);
+  toggleDarkMode();
 };
