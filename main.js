@@ -43,8 +43,8 @@ function modeChange() {
     card1.style.border = "1px solid #ccc";
     card2.style.border = "1px solid #ccc";
     card2.style.backgroundColor = "#FFFFFF";
-    card1.style.boxShadow = "0 8px 16px 0 #707070";
-    card2.style.boxShadow = "0 8px 16px 0 #707070";
+    card1.style.boxShadow = "0 8px 16px 0 #C0C0C0";
+    card2.style.boxShadow = "0 8px 16px 0 #C0C0C0";
     mutedText.style.color = "grey";
   }
 }
@@ -223,8 +223,8 @@ function getWeather() {
           card1.style.border = "1px solid #ccc";
           card2.style.border = "1px solid #ccc";
           card2.style.backgroundColor = "#FFFFFF";
-          card1.style.boxShadow = "0 8px 16px 0 #707070";
-          card2.style.boxShadow = "0 8px 16px 0 #707070";
+          card1.style.boxShadow = "0 8px 16px 0 #C0C0C0";
+          card2.style.boxShadow = "0 8px 16px 0 #C0C0C0";
           mutedText.style.color = "grey";
         }
       } else {
