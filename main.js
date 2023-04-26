@@ -1,6 +1,5 @@
 function getCountries() {
-  
-  var apiUrl = "https://restcountries.com/v3.1/all";
+  let apiUrl = "https://restcountries.com/v3.1/all";
 
   // make a GET request to the API URL using the fetch() method
   fetch(apiUrl)
@@ -8,14 +7,13 @@ function getCountries() {
     .then((data) => {
       data.sort((a, b) => (a.name.common > b.name.common ? 1 : -1));
       // populate the country select dropdown with the country names
-      var countrySelectElement = document.getElementById("countrySelect");
+      let countrySelectElement = document.getElementById("countrySelect");
       data.forEach((country) => {
-        var optionElement = document.createElement("option");
+        let optionElement = document.createElement("option");
         optionElement.value = country.cca2;
         optionElement.text = country.name.common;
         countrySelectElement.appendChild(optionElement);
       });
-
     })
     .catch((error) => console.error(error)); // log any errors to the console
 }
@@ -24,7 +22,8 @@ function modeChange() {
   const myCheckbox = document.getElementById("myCheckbox");
   const card1 = document.getElementById("card1");
   const card2 = document.getElementById("card2");
-  var slider = document.querySelector(".slider");
+  let slider = document.querySelector(".slider");
+  let mutedText = document.querySelector(".muted-text");
   if (myCheckbox.checked) {
     slider.style.backgroundColor = "grey";
     document.body.style.backgroundColor = "#131313";
@@ -33,6 +32,9 @@ function modeChange() {
     card1.style.border = "1px solid #2C2C2C";
     card2.style.border = "1px solid #2C2C2C";
     card2.style.backgroundColor = "#1F1F1F";
+    card1.style.boxShadow = "0 8px 16px 0 rgba(255, 255, 255, 0.2)";
+    card2.style.boxShadow = "0 8px 16px 0 rgba(255, 255, 255, 0.2)";
+    mutedText.style.color = "white";
   } else {
     slider.style.backgroundColor = "skyblue";
     document.body.style.backgroundColor = "#EBEBEB";
@@ -41,17 +43,19 @@ function modeChange() {
     card1.style.border = "1px solid #ccc";
     card2.style.border = "1px solid #ccc";
     card2.style.backgroundColor = "#FFFFFF";
+    card1.style.boxShadow = "0 8px 16px 0 #707070";
+    card2.style.boxShadow = "0 8px 16px 0 #707070";
+    mutedText.style.color = "grey";
   }
 }
 
 function show() {
-  var loader = document.getElementById("loader");
-  var searchBox = document.getElementById("searchBox");
-  var cityInput = document.getElementById("cityInput");
-  var btn = document.getElementById("btn");
-  var countrySelect = document.getElementById("countrySelect");
-  var weatherInfo = document.getElementById("weatherData");
-  
+  let loader = document.getElementById("loader");
+  let searchBox = document.getElementById("searchBox");
+  let cityInput = document.getElementById("cityInput");
+  let btn = document.getElementById("btn");
+  let countrySelect = document.getElementById("countrySelect");
+  let weatherInfo = document.getElementById("weatherData");
 
   // Add the "loader" class to show the loader
   loader.classList.add("loader");
@@ -64,7 +68,6 @@ function show() {
 
   // Hide the weather data and show the search box
   weatherInfo.innerHTML = "";
-  
 
   // Remove the "loader" class to hide the loader
   setTimeout(() => {
@@ -74,8 +77,8 @@ function show() {
 }
 
 function buttonClickable() {
-  var cityName = document.getElementById("cityInput").value;
-  var button = document.getElementById("btn");
+  let cityName = document.getElementById("cityInput").value;
+  let button = document.getElementById("btn");
   if (cityName === "") {
     button.disabled = true;
   } else {
@@ -101,10 +104,10 @@ function getWeather() {
   document.getElementById("loader").classList.add("loader");
   let weatherDataElement = document.getElementById("weatherData");
   weatherDataElement.innerHTML = ` `;
-  var cityName = document.getElementById("cityInput").value.trim();
-  var countryName = document.getElementById("countrySelect").value;
-  var apiKey = "8534e453e695aaa750bc5470cc2fced9";
-  var apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${cityName},${countryName}&appid=${apiKey}&units=metric`;
+  let cityName = document.getElementById("cityInput").value.trim();
+  let countryName = document.getElementById("countrySelect").value;
+  let apiKey = "8534e453e695aaa750bc5470cc2fced9";
+  let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${cityName},${countryName}&appid=${apiKey}&units=metric`;
 
   // make a GET request to the API URL using the fetch() method
   fetch(apiUrl)
@@ -112,9 +115,9 @@ function getWeather() {
     .then((data) => {
       if (data["cod"] == 200) {
         document.getElementById("loader").classList.remove("loader");
-        var searchBox = document.getElementById("searchBox");
+        let searchBox = document.getElementById("searchBox");
         searchBox.style.display = "none";
-        var weatherInfo = document.getElementById("weatherData");
+        let weatherInfo = document.getElementById("weatherData");
         weatherInfo.style.display = "block";
 
         const {
@@ -136,7 +139,7 @@ function getWeather() {
         // const {current_time} = dt;
         // q=${cityName},${countryName}&appid=${apiKey}&units=metric` ;
         // display the weather data in the HTML page_code
-        var weatherDataElement = document.getElementById("weatherData");
+        let weatherDataElement = document.getElementById("weatherData");
         const utcTime = new Date(dt * 1000 + timezone * 1000);
         const visible = visibility / 1000;
         const windDirection = degreesToDirection(deg);
@@ -202,21 +205,27 @@ function getWeather() {
       </div>
   
       `;
-        var checkbox = document.getElementById("myCheckbox");
-
-        var card1 = document.getElementById("card1");
-        var card2 = document.getElementById("card2");
+        let checkbox = document.getElementById("myCheckbox");
+        let mutedText = document.querySelector(".muted-text");
+        let card1 = document.getElementById("card1");
+        let card2 = document.getElementById("card2");
 
         if (checkbox.checked) {
           card1.style.backgroundColor = "#1F1F1F";
           card1.style.border = "1px solid #2C2C2C";
           card2.style.border = "1px solid #2C2C2C";
           card2.style.backgroundColor = "#1F1F1F";
+          card1.style.boxShadow = "0 8px 16px 0 rgba(255, 255, 255, 0.2)";
+          card2.style.boxShadow = "0 8px 16px 0 rgba(255, 255, 255, 0.2)";
+          mutedText.style.color = "white";
         } else {
           card1.style.backgroundColor = "#FFFFFF";
           card1.style.border = "1px solid #ccc";
           card2.style.border = "1px solid #ccc";
           card2.style.backgroundColor = "#FFFFFF";
+          card1.style.boxShadow = "0 8px 16px 0 #707070";
+          card2.style.boxShadow = "0 8px 16px 0 #707070";
+          mutedText.style.color = "grey";
         }
       } else {
         document.getElementById("loader").classList.remove("loader");
@@ -228,7 +237,7 @@ function getWeather() {
     })
     .catch((error) => {
       // display the error message in the HTML page
-      var weatherDataElement = document.getElementById("weatherData");
+      let weatherDataElement = document.getElementById("weatherData");
       weatherDataElement.innerHTML = `
       <span>${error}</span>
     `;
@@ -237,8 +246,8 @@ function getWeather() {
 
 window.onload = function () {
   getCountries();
-  var loader = document.getElementById("loader");
-  var searchBox = document.getElementById("searchBox");
+  let loader = document.getElementById("loader");
+  let searchBox = document.getElementById("searchBox");
   searchBox.style.display = "none";
   loader.classList.add("loader");
   setTimeout(() => {
