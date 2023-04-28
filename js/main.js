@@ -121,8 +121,7 @@ function getWeather() {
   weatherDataElement.innerHTML = ` `;
   let cityName = document.getElementById("cityInput").value.trim();
   let countryName = document.getElementById("countrySelect").value;
-  let apiKey = "8534e453e695aaa750bc5470cc2fced9";
-  let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${cityName},${countryName}&appid=${apiKey}&units=metric`;
+  let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${cityName},${countryName}&appid=${YOUR_API_KEY_HERE}&units=metric`;
 
   // make a GET request to the API URL using the fetch() method
   fetch(apiUrl)
