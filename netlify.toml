@@ -1,0 +1,3 @@
+[[build]]
+  # Include the config.js file in the build process
+  include = "config.js"
