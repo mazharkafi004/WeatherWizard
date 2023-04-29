@@ -1,0 +1,10 @@
+# Build settings
+[build]
+  # Build command
+  command = "npm run build"
+
+  # Publish directory
+  publish = "public"
+
+  # Exclude the config.js file from the build process
+  exclude = "config.js"
