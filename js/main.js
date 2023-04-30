@@ -1,3 +1,4 @@
+require('dotenv').config()
 function getCountries() {
   let apiUrl = "https://restcountries.com/v3.1/all";
 
@@ -121,9 +122,9 @@ function getWeather() {
   weatherDataElement.innerHTML = ` `;
   let cityName = document.getElementById("cityInput").value.trim();
   let countryName = document.getElementById("countrySelect").value;
-  console.log(window.env);
-  let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${cityName},${countryName}&appid=${window.env.REACT_APP_API_KEY}&units=metric`;
-  // let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${cityName},${countryName}&appid=${window.env.API_KEY}&units=metric`;
+  let apiKey = process.env.API_KEY;
+  let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${cityName},${countryName}&appid=${apiKey}&units=metric`;
+  
 
   // make a GET request to the API URL using the fetch() method
   fetch(apiUrl)
