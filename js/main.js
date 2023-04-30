@@ -121,9 +121,9 @@ function getWeather() {
   weatherDataElement.innerHTML = ` `;
   let cityName = document.getElementById("cityInput").value.trim();
   let countryName = document.getElementById("countrySelect").value;
-  console.log(window.env);
-  // let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${cityName},${countryName}&appid=${process.env.API_KEY}&units=metric`;
-  let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${cityName},${countryName}&appid=${window.env.API_KEY}&units=metric`;
+  console.log(process.env);
+  let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${cityName},${countryName}&appid=${process.env.API_KEY}&units=metric`;
+  // let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${cityName},${countryName}&appid=${window.env.API_KEY}&units=metric`;
 
   // make a GET request to the API URL using the fetch() method
   fetch(apiUrl)
