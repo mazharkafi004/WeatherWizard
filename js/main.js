@@ -1,4 +1,3 @@
-import YOUR_API_KEY from './config.js'; 
 
 function getCountries() {
   let apiUrl = "https://restcountries.com/v3.1/all";
@@ -30,6 +29,7 @@ function modeChange() {
     toggleDarkMode();
   }
 }
+
 function toggleDarkMode() {
   const isDarkModeEnabled = localStorage.getItem("darkmode") === "true";
   const myCheckbox = document.getElementById("myCheckbox");
