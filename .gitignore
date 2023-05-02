@@ -1,2 +1,2 @@
-.env
-node_modules
+.github
+js/config.js
