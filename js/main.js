@@ -1,4 +1,3 @@
-
 function getCountries() {
   let apiUrl = "https://restcountries.com/v3.1/all";
 
@@ -123,20 +122,23 @@ function getWeather() {
   weatherDataElement.innerHTML = ` `;
   let cityName = document.getElementById("cityInput").value.trim();
   let countryName = document.getElementById("countrySelect").value;
-  let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${cityName},${countryName}&appid=${YOUR_API_KEY}&units=metric`;
-  
+  let currentWeatherUrl = `https://api.openweathermap.org/data/2.5/weather?q=${cityName},${countryName}&appid=${YOUR_API_KEY}&units=metric`;
+  let currentWeatherPromise = fetch(currentWeatherUrl);
+
+  // Make a GET request to the 5-day forecast API URL using the fetch() method
+  let forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${cityName},${countryName}&appid=${YOUR_API_KEY}&units=metric&cnt=40`;
+  let forecastPromise = fetch(forecastUrl);
 
   // make a GET request to the API URL using the fetch() method
-  fetch(apiUrl)
-    .then((response) => response.json()) // parse the JSON data returned by the API
-    .then((data) => {
-      if (data["cod"] == 200) {
+  Promise.all([currentWeatherPromise, forecastPromise])
+    .then((responses) => Promise.all(responses.map((r) => r.json()))) // parse the JSON data returned by the APIs
+    .then(([currentWeatherData, forecastData]) => {
+      if (currentWeatherData["cod"] == 200 && forecastData["cod"] == "200") {
         document.getElementById("loader").classList.remove("loader");
         let searchBox = document.getElementById("searchBox");
         searchBox.style.display = "none";
         let weatherInfo = document.getElementById("weatherData");
         weatherInfo.style.display = "block";
-
         const {
           name,
           sys,
@@ -147,19 +149,19 @@ function getWeather() {
           dt,
           timezone,
           visibility,
-        } = data;
+        } = currentWeatherData;
         const { country, sunrise, sunset } = sys;
         const { temp, feels_like, pressure, humidity } = main;
         const { description, icon } = weather[0];
         const { speed, deg } = wind;
         const { all } = clouds;
-        // const {current_time} = dt;
-        // q=${cityName},${countryName}&appid=${apiKey}&units=metric` ;
+        const time = dt;
         // display the weather data in the HTML page_code
         let weatherDataElement = document.getElementById("weatherData");
         const utcTime = new Date(dt * 1000 + timezone * 1000);
         const visible = visibility / 1000;
         const windDirection = degreesToDirection(deg);
+        const windSpeed = (speed * 3.6).toFixed(2);
         // Convert UTC time to local time
         const localTime = new Date(
           utcTime.getTime() + new Date().getTimezoneOffset() * 60 * 1000
@@ -182,48 +184,70 @@ function getWeather() {
           </div>
           </div>
           <hr>
-        <img src="http://openweathermap.org/img/wn/${icon}.png" alt="${description}" style="width: 10%"> 
-        <br>
-        <div class="container">
-        <p>${description} </p>
-        <br>
+          <b>
+          <h4>${temp}°C<br>
+          ${description} <br></h4>
+        <img src="http://openweathermap.org/img/w/${icon}.png" alt="${description}"> 
+       <br>
+       <br>
+        <div id="forecastContainer" class="row"></div>
         </div>
-        </div>
+        
         <div id="card2" class="card">
         <div class="container">
         
         <hr class="solid">
         <div class="row">
         <div class="column">
-          <p><i class="fa fa-thermometer-empty" aria-hidden="true"></i> Temperature: ${temp}°C</p>
           <p><i class="fa fa-registered" aria-hidden="true"></i> Real feel: ${feels_like}°C</p>
           <p><i class="fa fa-compress" aria-hidden="true"></i> Air Pressure: ${pressure} mb</p>
           <p><i class="fa fa-tint" aria-hidden="true"></i> Humidity: ${humidity}%</p>
-          <p><i class="fa fa-eye" aria-hidden="true"></i> Visibility: ${visible}km</p>
+          <p><i class="fa fa-cloud" aria-hidden="true"></i> Cloudiness: ${all}%</p>
         </div>
           <div class="column">
-          <p><i class="fa fa-superpowers" aria-hidden="true"></i> Wind speed: ${speed} m/s</p>
+          <p><i class="fa fa-superpowers" aria-hidden="true"></i> Wind speed: ${windSpeed} km/h</p>
           <p><i class="fa fa-arrows" aria-hidden="true"></i> Wind direction: ${deg}° ${windDirection}</p>
-          <p><i class="fa fa-cloud" aria-hidden="true"></i> Cloudiness: ${all}%</p>
-          <p><span class="material-symbols-outlined" style="font-size: 18px">
-          water_lux
-          </span> Sunrise:
+          
+          <p><i class="fa fa-clock-o" aria-hidden="true"></i> Sunrise:
           </span></i> ${new Date(sunrise * 1000).toLocaleTimeString()}</p>
-          <p><span class="material-symbols-outlined" style="font-size: 18px">
-          wb_twilight
-          </span> Sunset: ${new Date(
+          <p><i class="fa fa-clock-o" aria-hidden="true"></i> Sunset: ${new Date(
             sunset * 1000
           ).toLocaleTimeString()}</p></div>
         </div>
-
+        
+        
   
         </div>
         <br>
         <hr>
         <button class="button" onclick="show()">See another</button>
+        <button class="button" onclick="getWeather()"><i class="fa fa-refresh" aria-hidden="true"></i></button>
         </div>
   
       `;
+        const forecastContainer = document.getElementById("forecastContainer");
+        forecastContainer.innerHTML = "";
+        forecastContainer.style.display = "flex";
+        forecastContainer.style.flexWrap = "nowrap"
+        const filteredForecast = forecastData.list.filter(item => item.dt_txt.includes('12:00:00'));
+        // .slice(2);
+          filteredForecast.forEach((forecast) => {
+          // get the forecast data
+          const { dt_txt, main, weather,dt } = forecast;
+          const { temp } = main;
+          const { description, icon } = weather[0];
+          const date = new Date(dt_txt);
+          const dayOfWeek = new Intl.DateTimeFormat('en-US', { weekday: 'long' }).format(date);
+          const cardHtml = `
+          <div class="weather-card column ">
+            <div>${dayOfWeek} </div> <br>
+            <div>${description}</div> <br>
+            <div>${temp.toFixed(2)}&deg;C</div>
+            <div><img src="http://openweathermap.org/img/w/${icon}.png" alt="${description}" ></div>
+          </div>
+        `;
+        forecastContainer.innerHTML += cardHtml;
+        });
         toggleDarkMode();
       } else {
         document.getElementById("loader").classList.remove("loader");
