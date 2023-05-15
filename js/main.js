@@ -241,9 +241,10 @@ function getWeather() {
           const cardHtml = `
           <div class="weather-card column ">
             <div>${dayOfWeek} </div> <br>
-            <div>${description}</div> <br>
+            
             <div>${temp.toFixed(2)}&deg;C</div>
             <div><img src="http://openweathermap.org/img/w/${icon}.png" alt="${description}" ></div>
+            <div>${description}</div> <br>
           </div>
         `;
         forecastContainer.innerHTML += cardHtml;
