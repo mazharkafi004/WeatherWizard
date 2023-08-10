@@ -32,39 +32,37 @@ function modeChange() {
 function toggleDarkMode() {
   const isDarkModeEnabled = localStorage.getItem("darkmode") === "true";
   const myCheckbox = document.getElementById("myCheckbox");
-  const card1 = document.getElementById("card1");
-  const card2 = document.getElementById("card2");
+  const cardElements = document.querySelectorAll(".card");
   const slider = document.querySelector(".slider");
-  const mutedText = document.querySelector(".muted-text");
+  const body = document.body;
+  const input1 = document.getElementById("cityInput");
+  const input2 = document.getElementById("countrySelect");
 
-  if (isDarkModeEnabled) {
-    myCheckbox.checked = true;
-    slider.style.backgroundColor = "grey";
-    document.body.style.backgroundColor = "#131313";
-    document.body.style.color = "white";
-    card1.style.backgroundColor = "#1F1F1F";
-    card1.style.border = "1px solid #2C2C2C";
-    card2.style.border = "1px solid #2C2C2C";
-    card2.style.backgroundColor = "#1F1F1F";
-    card1.style.boxShadow = "0 8px 16px 0 rgba(255, 255, 255, 0.2)";
-    card2.style.boxShadow = "0 8px 16px 0 rgba(255, 255, 255, 0.2)";
-    mutedText.style.color = "white";
-  } else {
-    myCheckbox.checked = false;
-    slider.style.backgroundColor = "skyblue";
-    document.body.style.backgroundColor = "#EBEBEB";
-    document.body.style.color = "#222222";
-    card1.style.backgroundColor = "#FFFFFF";
-    card1.style.border = "1px solid #ccc";
-    card2.style.border = "1px solid #ccc";
-    card2.style.backgroundColor = "#FFFFFF";
-    card1.style.boxShadow = "0 8px 16px 0 #C0C0C0";
-    card2.style.boxShadow = "0 8px 16px 0 #C0C0C0";
-    mutedText.style.color = "grey";
-  }
+  myCheckbox.checked = isDarkModeEnabled;
+  slider.style.backgroundColor = isDarkModeEnabled ? "grey" : "skyblue";
+  body.style.backgroundColor = isDarkModeEnabled ? "#131313" : "#EBEBEB";
+  body.style.color = isDarkModeEnabled ? "white" : "#222222";
+  input1.style.color = isDarkModeEnabled ? "#DBD0CA" : "#262626";
+  input1.style.backgroundColor = isDarkModeEnabled ? "#262626" : "#DBD0CA";
+
+  input2.style.color = isDarkModeEnabled ? "#DBD0CA" : "#262626";
+  input2.style.backgroundColor = isDarkModeEnabled ? "#262626" : "#DBD0CA";
+  cardElements.forEach((card) => {
+    card.style.backgroundColor = isDarkModeEnabled ? "#1F1F1F" : "#FFFFFF";
+    card.style.border = isDarkModeEnabled
+      ? "1px solid #2C2C2C"
+      : "1px solid #ccc";
+    card.style.boxShadow = isDarkModeEnabled
+      ? "0 8px 16px 0 rgba(255, 255, 255, 0.2)"
+      : "0 8px 16px 0 #C0C0C0";
+  });
+
+  const mutedText = document.querySelector(".muted-text");
+  mutedText.style.color = isDarkModeEnabled ? "white" : "grey";
 
   // localStorage.setItem("darkmode", !isDarkModeEnabled);
 }
+
 function show() {
   let loader = document.getElementById("loader");
   let searchBox = document.getElementById("searchBox");
@@ -72,6 +70,7 @@ function show() {
   let btn = document.getElementById("btn");
   let countrySelect = document.getElementById("countrySelect");
   let weatherInfo = document.getElementById("weatherData");
+  let forecastInfo = document.getElementById("forecastContainer");
 
   // Add the "loader" class to show the loader
   loader.classList.add("loader");
@@ -84,6 +83,7 @@ function show() {
 
   // Hide the weather data and show the search box
   weatherInfo.innerHTML = "";
+  forecastInfo.innerHTML = "";
 
   // Remove the "loader" class to hide the loader
   setTimeout(() => {
@@ -171,75 +171,97 @@ function getWeather() {
         const timeOptions = { hour12: true, hourCycle: "h12" };
 
         weatherDataElement.innerHTML = `
-        <div id="card1" class="card">
+        <div class="card">
         <div class="card-header">
-        <div>
-        <p>Current Weather of:<i class="fa fa-map-marker" aria-hidden="true"></i> <b>${name}, ${country} </b></p>
-        </div>
-        <div class="time">
-        <span class="muted-text"><small><i class="fa fa-clock-o" aria-hidden="true"></i> Last updated at: ${localTime.toLocaleTimeString(
-          [],
-          timeOptions
-        )}<br>local time</small></span>
+          <div>
+            <p>Current Weather of: <i class="fa fa-map-marker" aria-hidden="true"></i> <b>${name}, ${country}</b></p>
           </div>
+          <div class="time">
+            <span class="muted-text">
+              <small>
+                <i class="fa fa-clock-o" aria-hidden="true"></i>
+                Last updated at: ${localTime.toLocaleTimeString(
+                  [],
+                  timeOptions
+                )}<br>local time
+              </small>
+            </span>
           </div>
-          <hr>
-          <b>
-          <h4>${temp}°C<br>
-          ${description} <br></h4>
-        <img src="http://openweathermap.org/img/w/${icon}.png" alt="${description}"> 
-       <br>
-       <br>
-        <div id="forecastContainer" class="row"></div>
         </div>
-        
-        <div id="card2" class="card">
-        <div class="container">
-        
-        <hr class="solid">
-        <div class="row">
-        <div class="column">
-          <p><i class="fa fa-registered" aria-hidden="true"></i> Real feel: ${feels_like}°C</p>
-          <p><i class="fa fa-compress" aria-hidden="true"></i> Air Pressure: ${pressure} mb</p>
-          <p><i class="fa fa-tint" aria-hidden="true"></i> Humidity: ${humidity}%</p>
-          <p><i class="fa fa-cloud" aria-hidden="true"></i> Cloudiness: ${all}%</p>
+        <hr>
+        <div class="weather-info">
+          <div class="weather-description">
+            <h4>${temp}°C<br>${description}</h4>
+            <img src="http://openweathermap.org/img/w/${icon}.png" alt="${description}">
+          </div>
+          <br>
+          <div class="weather-details">
+            <div class="detail">
+              <i class="fa fa-registered" aria-hidden="true"></i>
+              <span>Real feel: ${feels_like}°C</span>
+            </div>
+            <div class="detail">
+              <i class="fa fa-compress" aria-hidden="true"></i>
+              <span>Air Pressure: ${pressure} mb</span>
+            </div>
+            <div class="detail">
+              <i class="fa fa-tint" aria-hidden="true"></i>
+              <span>Humidity: ${humidity}%</span>
+            </div>
+            <div class="detail">
+              <i class="fa fa-cloud" aria-hidden="true"></i>
+              <span>Cloudiness: ${all}%</span>
+            </div>
+            <div class="detail">
+              <i class="fa fa-superpowers" aria-hidden="true"></i>
+              <span>Wind speed: ${windSpeed} km/h</span>
+            </div>
+            <div class="detail">
+              <i class="fa fa-arrows" aria-hidden="true"></i>
+              <span>Wind direction: ${deg}° ${windDirection}</span>
+            </div>
+            <div class="detail">
+              <i class="fa fa-clock-o" aria-hidden="true"></i>
+              <span>Sunrise: ${new Date(
+                sunrise * 1000
+              ).toLocaleTimeString()}</span>
+            </div>
+            <div class="detail">
+              <i class="fa fa-clock-o" aria-hidden="true"></i>
+              <span>Sunset: ${new Date(
+                sunset * 1000
+              ).toLocaleTimeString()}</span>
+            </div>
+          </div>
         </div>
-          <div class="column">
-          <p><i class="fa fa-superpowers" aria-hidden="true"></i> Wind speed: ${windSpeed} km/h</p>
-          <p><i class="fa fa-arrows" aria-hidden="true"></i> Wind direction: ${deg}° ${windDirection}</p>
-          
-          <p><i class="fa fa-clock-o" aria-hidden="true"></i> Sunrise:
-          </span></i> ${new Date(sunrise * 1000).toLocaleTimeString()}</p>
-          <p><i class="fa fa-clock-o" aria-hidden="true"></i> Sunset: ${new Date(
-            sunset * 1000
-          ).toLocaleTimeString()}</p></div>
-        </div>
-        
-        
-  
-        </div>
-        <br>
         <hr>
         <button class="button" onclick="show()">See another</button>
-        <button class="button" onclick="getWeather()"><i class="fa fa-refresh" aria-hidden="true"></i></button>
-        </div>
+        <button class="button" onclick="getWeather()">
+          <i class="fa fa-refresh" aria-hidden="true"></i>
+        </button>
+      </div>
+      
   
       `;
         const forecastContainer = document.getElementById("forecastContainer");
         forecastContainer.innerHTML = "";
         forecastContainer.style.display = "flex";
-        forecastContainer.style.flexWrap = "nowrap"
-        const filteredForecast = forecastData.list.filter(item => item.dt_txt.includes('12:00:00'));
+        forecastContainer.style.flexWrap = "nowrap";
+        const filteredForecast = forecastData.list.filter((item) =>
+          item.dt_txt.includes("12:00:00")
+        );
         // .slice(2);
-          filteredForecast.forEach((forecast) => {
+        filteredForecast.forEach((forecast) => {
           // get the forecast data
-          const { dt_txt, main, weather,dt } = forecast;
+          const { dt_txt, main, weather, dt } = forecast;
           const { temp } = main;
           const { description, icon } = weather[0];
           const date = new Date(dt_txt);
-          const dayOfWeek = new Intl.DateTimeFormat('en-US', { weekday: 'long' }).format(date);
+          const dayOfWeek = new Intl.DateTimeFormat("en-US", {
+            weekday: "long",
+          }).format(date);
           const cardHtml = `
-          <div class="weather-card column ">
+          <div class="weather-card column card">
             <div>${dayOfWeek} </div> <br>
             
             <div>${temp.toFixed(2)}&deg;C</div>
@@ -247,7 +269,7 @@ function getWeather() {
             <div>${description}</div> <br>
           </div>
         `;
-        forecastContainer.innerHTML += cardHtml;
+          forecastContainer.innerHTML += cardHtml;
         });
         toggleDarkMode();
       } else {
