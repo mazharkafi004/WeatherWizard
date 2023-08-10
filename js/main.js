@@ -42,11 +42,11 @@ function toggleDarkMode() {
   slider.style.backgroundColor = isDarkModeEnabled ? "grey" : "skyblue";
   body.style.backgroundColor = isDarkModeEnabled ? "#131313" : "#EBEBEB";
   body.style.color = isDarkModeEnabled ? "white" : "#222222";
-  input1.style.color = isDarkModeEnabled ? "#DBD0CA" : "#262626";
-  input1.style.backgroundColor = isDarkModeEnabled ? "#262626" : "#DBD0CA";
+  input1.style.color = isDarkModeEnabled ? "#F8F8F8" : "#262626";
+  input1.style.backgroundColor = isDarkModeEnabled ? "#262626" : "#F8F8F8";
 
-  input2.style.color = isDarkModeEnabled ? "#DBD0CA" : "#262626";
-  input2.style.backgroundColor = isDarkModeEnabled ? "#262626" : "#DBD0CA";
+  input2.style.color = isDarkModeEnabled ? "#F8F8F8" : "#262626";
+  input2.style.backgroundColor = isDarkModeEnabled ? "#262626" : "#F8F8F8";
   cardElements.forEach((card) => {
     card.style.backgroundColor = isDarkModeEnabled ? "#1F1F1F" : "#FFFFFF";
     card.style.border = isDarkModeEnabled
